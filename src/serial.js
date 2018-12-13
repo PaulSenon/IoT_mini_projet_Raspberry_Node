@@ -1,16 +1,16 @@
 const SerialPort = require('serialport');
-SerialPort.parsers = {
-    Readline: require('@serialport/parser-readline'),
-};
-const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort('/dev/ttyUSB0',{baudRate:115200});
-const parser = new Readline();
-port.pipe(parser);
-parser.on('data', (data)=> {
-    console.log('parser triggered');
-    console.log(data);
-});
-port.write('ROBOT PLEASE RESPOND\n');
+// SerialPort.parsers = {
+//     Readline: require('@serialport/parser-readline'),
+// };
+// const Readline = SerialPort.parsers.Readline;
+// const port = new SerialPort('/dev/ttyUSB0',{baudRate:115200});
+// const parser = new Readline();
+// port.pipe(parser);
+// parser.on('data', (data)=> {
+//     console.log('parser triggered');
+//     console.log(data);
+// });
+// port.write('ROBOT PLEASE RESPOND\n');
 
 // // Creating the parser and piping can be shortened to
 // const parser = port.pipe(new Readline())
@@ -21,9 +21,9 @@ class SerialManager {
     constructor(dbManager){
         this.dbManager = dbManager;
         // config serial port
-        // this.port = new SerialPort('/dev/ttyUSB0', {
-        //     baudRate: 115200
-        // });
+        this.port = new SerialPort('/dev/ttyUSB0', {
+            baudRate: 115200
+        });
 
         
         // ROBOT ONLINE
@@ -31,15 +31,15 @@ class SerialManager {
 
         
         // Read data that is available but keep the stream in "paused mode"
-        // this.port.on('readable', async () => {
-        //     const message = this.port.read();
-        //     console.log('RECEIVED: '+message);
+        this.port.on('readable', async () => {
+            const message = this.port.read();
+            console.log('RECEIVED: '+message);
 
-        //     // const res = this.validateMessage(message);
-        //     // if(!res) return;
+            // const res = this.validateMessage(message);
+            // if(!res) return;
             
-        //     // await this.dbManager.addSensorData(res['id'], res['data']);
-        // });
+            // await this.dbManager.addSensorData(res['id'], res['data']);
+        });
 
         // this.port.on('data', (data) => {
         //     console.log('Data:', data);
@@ -99,9 +99,9 @@ class SerialManager {
         };
 
         // // Error handler
-        // this.port.on('error', function(err) {
-        //     console.log('Error serial: ', err.message);
-        // })
+        this.port.on('error', function(err) {
+            console.log('Error serial: ', err.message);
+        })
     }
 
     sendMessage(message){
