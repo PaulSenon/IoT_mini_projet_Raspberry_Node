@@ -18,7 +18,6 @@ const dbManager = new DbManager();
 
 
 const validateMessage = (message) => {
-    console.log(message);
     const fragments = message.split(':'); 
     if(fragments.length !== 3
         || fragments[0] != SALT) return false;
@@ -73,7 +72,7 @@ const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
 const parser = portS.pipe(new Readline({ 
-    delimiter: '\n\r',
+    delimiter: '@@@@',
     encoding: 'ascii'
 }));
 parser.on('data', (data)=> {
