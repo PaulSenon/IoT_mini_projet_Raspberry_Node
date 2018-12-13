@@ -14,7 +14,7 @@ const dbManager = new DbManager();
 // const udpManager = new UdpManager(serialManager);
 
 
-onst validateMessage = (message) => {
+const validateMessage = (message) => {
     const fragments = message.split(':'); 
     if(fragments.length !== 3
         || fragments[0] != SALT) return false;
@@ -85,9 +85,6 @@ portS.on('open', function() {
   console.log('open');
 })
 
-
-
-c
 
 
 
