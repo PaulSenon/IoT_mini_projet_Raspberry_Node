@@ -16,6 +16,11 @@ const dbManager = new DbManager();
 //Setup Serial Port Connection
 const SerialPort = require('serialport');
 SerialPort.list().then(console.log);
+
+setImmediate(() => {
+    serialport.write("LOL des barres", "ascii", ()=>{console.log});
+}, 2000);
+
 //const Readline = SerialPort.parsers.Readline;
 const portSerial = new SerialPort('/dev/ttyUSB0',{
   baudRate: 9600,	
