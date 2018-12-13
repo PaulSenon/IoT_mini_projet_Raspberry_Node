@@ -19,9 +19,9 @@ class DatabaseManager {
             console.log(JSON.stringify(data, null, 2));
             try{
                 const timestamp = Date.now();
-                // save to list
-                this.db.setWith(`sensorData.${sensorId}.${timestamp}`, data, Object)
-                    .write();
+                // // save to list
+                // this.db.setWith(`sensorData.${sensorId}.${timestamp}`, data, Object)
+                //     .write();
     
                 // save to lastmodified
                 this.db.set(`lastSensorData.${sensorId}`, {
