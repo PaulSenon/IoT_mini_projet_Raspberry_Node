@@ -35,6 +35,7 @@ portS.on('error', function(err) {
 
 class SerialManager {
     constructor(dbManager){
+        console.log('serial OK');
         this.dbManager = dbManager;
         // config serial port
 
