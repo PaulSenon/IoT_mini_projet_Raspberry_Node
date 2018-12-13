@@ -10,8 +10,8 @@
         <div>
             <h3>Sensor n°{{ key }} ({{ (value.timestamp/1000)|date("m/d/Y - h:i") }})</h3>
             <ul>
-                <li>Temperature : {{ value.temperature }}°C</li>
-                <li>Humidity : {{ value.humidity }}%</li>
+                <li>Temperature : {{ value.temperature/10 }},{{ value.temperature%10 }}°C</li>
+                <li>Humidity : {{ value.humidity/10 }},{{ value.humidity%10 }}%</li>
                 <li>Luminosity : {{ value.luminosity }} lux</li>
             </ul>
         </div>
