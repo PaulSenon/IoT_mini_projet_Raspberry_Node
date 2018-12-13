@@ -69,25 +69,39 @@ const validateMessage = (message) => {
 const SALT = 1567464;
 
 const SerialPort = require('serialport');
-const Readline = require('@serialport/parser-readline');
-const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
-const parser = portS.pipe(new Readline({ 
-    delimiter: '\n',
-    encoding: 'ascii'
-}));
-parser.on('data', (data)=> {
-    console.log(data);
-    res = validateMessage(data);
-    console.log(res);
-    // if(res){
-    //     dbManager.addSensorData(res['id'],res['data']);
-    // }
+const serialPort = new SerialPort('/dev/ttyUSB0', {
+    baudrate: 115200
 });
-// The open event is always emitted
-portS.on('open', function() {
-  // open logic
-  console.log('open');
-})
+
+// Switches the port into "flowing mode"
+serialPort.on('data', function (data) {
+    console.log('Data:', data);
+});
+// Read data that is available but keep the stream from entering //"flowing mode"
+serialPort.on('readable', function () {
+    console.log('Data:', port.read());
+});
+
+// const SerialPort = require('serialport');
+// const Readline = require('@serialport/parser-readline');
+// const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
+// const parser = portS.pipe(new Readline({ 
+//     delimiter: '\n',
+//     encoding: 'ascii'
+// }));
+// parser.on('data', (data)=> {
+//     console.log(data);
+//     res = validateMessage(data);
+//     console.log(res);
+//     // if(res){
+//     //     dbManager.addSensorData(res['id'],res['data']);
+//     // }
+// });
+// // The open event is always emitted
+// portS.on('open', function() {
+//   // open logic
+//   console.log('open');
+// })
 
 
 
