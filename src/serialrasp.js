@@ -9,11 +9,11 @@ class SerialManager {
         this.serial;
         raspi.init(() => {
             this.serial = new Serial();
-            serial.open(() => {
-                serial.on('data', (data) => {
+            this.serial.open(() => {
+                this.serial.on('data', (data) => {
                     console.log('SERIAL : '+data)
                 });
-                serial.write('Hello from raspi-serial');
+                this.serial.write('Hello from raspi-serial');
             });
         });
     }
