@@ -95,10 +95,10 @@ class SerialManager {
             return result;
         };
 
-        // Error handler
-        this.port.on('error', function(err) {
-            console.log('Error serial: ', err.message);
-        })
+        // // Error handler
+        // this.port.on('error', function(err) {
+        //     console.log('Error serial: ', err.message);
+        // })
     }
 
     sendMessage(message){
