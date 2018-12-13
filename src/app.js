@@ -18,7 +18,7 @@ const SerialPort = require('serialport');
 SerialPort.list().then(console.log);
 
 const portSerial = new SerialPort('/dev/ttyUSB0',{
-  baudRate: 9600,	
+  baudRate: 18200,	
   // parser: new SerialPort.parsers.Readline('\r\n')
 });
 setImmediate(() => {
