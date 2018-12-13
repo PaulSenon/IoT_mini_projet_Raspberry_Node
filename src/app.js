@@ -68,19 +68,19 @@ const validateMessage = (message) => {
 
 const SALT = 1567464;
 
-const SerialPort = require('serialport');
-const serialPort = new SerialPort('/dev/ttyUSB0', {
-    bauDrate: 115200
-});
+// const SerialPort = require('serialport');
+// const serialPort = new SerialPort('/dev/ttyUSB0', {
+//     bauDrate: 115200
+// });
 
-// Switches the port into "flowing mode"
-serialPort.on('data', function (data) {
-    console.log('Data:', data);
-});
-// Read data that is available but keep the stream from entering //"flowing mode"
-serialPort.on('readable', function () {
-    console.log('Data:', serialPort.read());
-});
+// // Switches the port into "flowing mode"
+// serialPort.on('data', function (data) {
+//     console.log('Data:', data);
+// });
+// // Read data that is available but keep the stream from entering //"flowing mode"
+// serialPort.on('readable', function () {
+//     console.log('Data:', serialPort.read());
+// });
 
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
