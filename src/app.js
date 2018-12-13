@@ -73,8 +73,8 @@ const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
 const parser = portS.pipe(new Readline({ 
-    delimiter: '\n',
-    encoding: 'ascii'
+    // delimiter: '\n',
+    // encoding: 'ascii'
 }));
 parser.on('data', async (data)=> {
     console.log(data);
@@ -120,7 +120,6 @@ app.get('/', (req, res) => {
 
 app.get('/dashboard', async (req, res) => {
     
-    console.log('hello');
     const data = await dbManager.getAllLastSensorData();
     res.render('home/index.html.twig', {data});
 });
