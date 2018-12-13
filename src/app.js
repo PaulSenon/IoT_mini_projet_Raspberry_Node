@@ -11,7 +11,10 @@ const dbManager = new DbManager();
 // const SerialManager = require('./serial');
 // const serialManager = new SerialManager(dbManager);
 // const UdpManager = require('./udp');
-// const udpManager = new UdpManager(serialManager);
+// const udpManager = new UdpManager(
+//     // serialManager,
+//     dbManager
+// );
 
 
 const validateMessage = (message) => {
@@ -74,6 +77,7 @@ const parser = portS.pipe(new Readline({
     encoding: 'ascii'
 }));
 parser.on('data', async (data)=> {
+    console.log(data);
     res = validateMessage(data);
     console.log(res);
     if(res){
