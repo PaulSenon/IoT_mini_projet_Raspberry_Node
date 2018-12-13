@@ -11,12 +11,18 @@ class SerialManager {
         
         // Read data that is available but keep the stream in "paused mode"
         this.port.on('readable', async () => {
-            const message = await this.port.read();
+            const message = this.port.read();
+            console.log(message);
 
-            const res = this.validateMessage(message);
-            if(!res) return;
+            // const res = this.validateMessage(message);
+            // if(!res) return;
             
             await this.dbManager.addSensorData(res['id'], res['data']);
+        });
+
+        this.port.on('open', async () => {
+            console.log('LOL');
+            await this.sendMessage('###################');
         });
       
         this.validateMessage = (message) => {

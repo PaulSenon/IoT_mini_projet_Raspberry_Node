@@ -8,7 +8,7 @@ const _ = require('lodash');
 
 const DbManager = require('./lowdb');
 const dbManager = new DbManager();
-const SerialManager = require('./serialrasp');
+const SerialManager = require('./serial');
 const serialManager = new SerialManager(dbManager);
 const UdpManager = require('./udp');
 const udpManager = new UdpManager(serialManager);
