@@ -79,7 +79,7 @@ serialPort.on('data', function (data) {
 });
 // Read data that is available but keep the stream from entering //"flowing mode"
 serialPort.on('readable', function () {
-    console.log('Data:', port.read());
+    console.log('Data:', serialPort.read());
 });
 
 // const SerialPort = require('serialport');
