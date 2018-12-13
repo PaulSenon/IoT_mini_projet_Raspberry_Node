@@ -17,7 +17,7 @@ class SerialManager {
             // const res = this.validateMessage(message);
             // if(!res) return;
             
-            await this.dbManager.addSensorData(res['id'], res['data']);
+            // await this.dbManager.addSensorData(res['id'], res['data']);
         });
 
         this.port.on('open', async () => {
