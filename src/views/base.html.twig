@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello</title> 
+    {% include "common/meta.html.twig" %}
+    {% include "common/style.html.twig" %}
+    {% include "common/header_scripts.html.twig" %}
+    {% block head_scripts %}{% endblock %}
+</head>
+<body>
+    {% block content %}{% endblock %}
+    {% include "common/footer_scripts.html.twig" %}
+</body>
+</html>

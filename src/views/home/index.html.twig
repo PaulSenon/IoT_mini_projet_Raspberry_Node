@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block head_scripts %}
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>IoT Sensors Data</h1>
+    {% for key, value in data %}
+        <div>
+            <h3>Sensor n°{{ key }} ({{ (value.timestamp/1000)|date("m/d/Y - h:i") }})</h3>
+            <ul>
+                <li>Temperature : {{ value.temperature }}°C</li>
+                <li>Humidity : {{ value.humidity }}%</li>
+                <li>Luminosity : {{ value.luminosity }} lux</li>
+            </ul>
+        </div>
+    {% endfor %}
+
+    {% extends "base.html.twig" %}
+
+</div>
+{% endblock %}

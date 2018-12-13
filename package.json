@@ -1,0 +1,49 @@
+{
+  "name": "iot-sensor-api",
+  "version": "1.0.0",
+  "description": "a web API for IoT project",
+  "main": "app.js",
+  "author": "Paul SENON",
+  "license": "MIT",
+  "scripts": {
+    "start": "sudo node src/app.js",
+    "pmstart:prod": "sudo pm2 start src/app.js --env production",
+    "pmstart:dev": "sudo pm2 start src/app.js --env development",
+    "restart": "sudo pm2 restart app",
+    "stop": "sudo pm2 stop app",
+    "watch": "sudo pm2 start src/app.js --watch",
+    "deploy": "gulp build && gcloud app deploy",
+    "test": "jest",
+    "testw": "yarn test --watchAll"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "lodash": "^4.17.10",
+    "lowdb": "^1.0.0",
+    "node-fetch": "^2.1.2",
+    "serialport": "^7.1.0",
+    "socket.io": "^2.1.0",
+    "twig": "^1.12.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-babel": "^7.0.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-plumber": "^1.2.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-zip": "^4.1.0",
+    "imagemin": "^5.3.1",
+    "imagemin-jpeg-recompress": "^5.1.0",
+    "imagemin-pngquant": "^5.1.0",
+    "jest": "^23.6.0"
+  }
+}
