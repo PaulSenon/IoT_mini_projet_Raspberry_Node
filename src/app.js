@@ -27,8 +27,8 @@ portSerial.on('error', function(err) {
     console.log('SearialPort Error: ', err.message);
 });
 //Send data from USB to web client
-function sendDataToWebClient(data){
-  setTimeout(function(){
+const sendDataToWebClient = (data) => {
+  setTimeout(() => {
        data = data.toString();
        console.log('RECEIVED : ' + data);
     //    io.sockets.emit('news', { data: data });
