@@ -21,7 +21,7 @@ const dbManager = new DbManager();
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
-const lineStream = portS.pipe(new Readline({ delimiter: '\r\n' }));
+const parser = portS.pipe(new Readline({ delimiter: '\r\n' }));
 parser.on('data', console.log);
 // The open event is always emitted
 portS.on('open', function() {
