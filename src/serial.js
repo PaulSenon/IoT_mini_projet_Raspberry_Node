@@ -1,13 +1,31 @@
 const SerialPort = require('serialport');
+SerialPort.parsers = {
+    Readline: require('@serialport/parser-readline'),
+};
+const Readline = SerialPort.parsers.Readline;
+const port = new SerialPort('/dev/ttyUSB0');
+const parser = new Readline();
+port.pipe(parser);
+parser.on('data', console.log);
+port.write('ROBOT PLEASE RESPOND\n');
+
+// // Creating the parser and piping can be shortened to
+// const parser = port.pipe(new Readline())
+
 const SALT = 1567464;
 
 class SerialManager {
     constructor(dbManager){
         this.dbManager = dbManager;
         // config serial port
-        this.port = new SerialPort('/dev/ttyUSB0', {
-            baudRate: 9600
-        });
+        // this.port = new SerialPort('/dev/ttyUSB0', {
+        //     baudRate: 9600
+        // });
+
+        
+        // ROBOT ONLINE
+
+
         
         // Read data that is available but keep the stream in "paused mode"
         // this.port.on('readable', async () => {
@@ -20,14 +38,14 @@ class SerialManager {
         //     // await this.dbManager.addSensorData(res['id'], res['data']);
         // });
 
-        this.port.on('data', (data) => {
-            console.log('Data:', data);
-        });
+        // this.port.on('data', (data) => {
+        //     console.log('Data:', data);
+        // });
 
-        this.port.on('open', async () => {
-            console.log('LOL');
-            await this.sendMessage('###################');
-        });
+        // this.port.on('open', async () => {
+        //     console.log('LOL');
+        //     await this.sendMessage('###################');
+        // });
       
         this.validateMessage = (message) => {
             const fragments = message.split(':'); 
