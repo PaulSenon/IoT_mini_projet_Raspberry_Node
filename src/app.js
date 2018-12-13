@@ -18,7 +18,7 @@ const SerialPort = require('serialport');
 SerialPort.list().then(console.log);
 
 setImmediate(() => {
-    serialport.write("LOL des barres", "ascii", ()=>{console.log});
+    Serialport.write("LOL des barres", "ascii", ()=>{console.log});
 }, 2000);
 
 //const Readline = SerialPort.parsers.Readline;
