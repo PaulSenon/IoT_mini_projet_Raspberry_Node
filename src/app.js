@@ -15,6 +15,7 @@ const dbManager = new DbManager();
 
 
 const validateMessage = (message) => {
+    console.log(message);
     const fragments = message.split(':'); 
     if(fragments.length !== 3
         || fragments[0] != SALT) return false;
@@ -72,11 +73,11 @@ const parser = portS.pipe(new Readline({
     delimiter: '\n',
     encoding: 'ascii'
 }));
-parser.on('data', (data)=> {
+parser.on('data', async (data)=> {
     res = validateMessage(data);
     console.log(res);
     if(res){
-        dbManager.addSensorData(res['id'],res['data'])
+        await dbManager.addSensorData(res['id'],res['data']);
     }
 });
 // The open event is always emitted
