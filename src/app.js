@@ -17,15 +17,15 @@ const dbManager = new DbManager();
 const SerialPort = require('serialport');
 SerialPort.list().then(console.log);
 
-setImmediate(() => {
-    Serialport.write("LOL des barres", "ascii", ()=>{console.log});
-}, 2000);
-
-//const Readline = SerialPort.parsers.Readline;
 const portSerial = new SerialPort('/dev/ttyUSB0',{
   baudRate: 9600,	
   // parser: new SerialPort.parsers.Readline('\r\n')
 });
+setImmediate(() => {
+    portSerial.write("LOL des barres", "ascii", ()=>{console.log});
+}, 2000);
+
+//const Readline = SerialPort.parsers.Readline;
 //const parser = new Readline();
 //port.pipe(parser);
 const sendDataToWebClient = (data) => {
