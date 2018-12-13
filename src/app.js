@@ -20,16 +20,10 @@ const dbManager = new DbManager();
 
 const SerialPort = require('serialport')
 const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 })
-
-portS.open(function (err) {
-  if (err) {
-    return console.log('Error opening port: ', err.message)
-  }
-
-  // Because there's no callback to write, write errors will be emitted on the port:
-  portS.write('main screen turn on')
-})
-
+const lineStream = portS.pipe(new Readline());
+lineStream.on('line', (input) => {
+    console.log(`Received: ${input}`);
+});
 // The open event is always emitted
 portS.on('open', function() {
   // open logic
