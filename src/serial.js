@@ -6,7 +6,10 @@ const Readline = SerialPort.parsers.Readline;
 const port = new SerialPort('/dev/ttyUSB0',{baudRate:115200});
 const parser = new Readline();
 port.pipe(parser);
-parser.on('data', console.log);
+parser.on('data', (data)=> {
+    console.log('parser triggered');
+    console.log(data);
+});
 port.write('ROBOT PLEASE RESPOND\n');
 
 // // Creating the parser and piping can be shortened to
