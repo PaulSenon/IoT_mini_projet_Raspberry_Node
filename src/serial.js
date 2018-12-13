@@ -19,7 +19,7 @@ class SerialManager {
         this.dbManager = dbManager;
         // config serial port
         // this.port = new SerialPort('/dev/ttyUSB0', {
-        //     baudRate: 9600
+        //     baudRate: 115200
         // });
 
         
@@ -30,7 +30,7 @@ class SerialManager {
         // Read data that is available but keep the stream in "paused mode"
         // this.port.on('readable', async () => {
         //     const message = this.port.read();
-        //     console.log(message);
+        //     console.log('RECEIVED: '+message);
 
         //     // const res = this.validateMessage(message);
         //     // if(!res) return;

@@ -8,40 +8,40 @@ const _ = require('lodash');
 
 const DbManager = require('./lowdb');
 const dbManager = new DbManager();
-// const SerialManager = require('./serial');
-// const serialManager = new SerialManager(dbManager);
+const SerialManager = require('./serial');
+const serialManager = new SerialManager(dbManager);
 // const UdpManager = require('./udp');
 // const udpManager = new UdpManager(serialManager);
 
-//Setup Serial Port Connection
-const SerialPort = require('serialport');
-SerialPort.list().then(console.log);
+// //Setup Serial Port Connection
+// const SerialPort = require('serialport');
+// SerialPort.list().then(console.log);
 
-const portSerial = new SerialPort('/dev/ttyUSB0',{
-  baudRate: 115200,	
-  // parser: new SerialPort.parsers.Readline('\r\n')
-});
-setImmediate(() => {
-    console.log('message sent');
-    portSerial.write("LOL des barres", "ascii", ()=>{console.log});
-}, 2000);
+// const portSerial = new SerialPort('/dev/ttyUSB0',{
+//   baudRate: 115200,	
+//   // parser: new SerialPort.parsers.Readline('\r\n')
+// });
+// setImmediate(() => {
+//     console.log('message sent');
+//     portSerial.write("LOL des barres", "ascii", ()=>{console.log});
+// }, 2000);
 
-//const Readline = SerialPort.parsers.Readline;
-//const parser = new Readline();
-//port.pipe(parser);
-const sendDataToWebClient = (data) => {
-    console.log(data);
-    // setTimeout(() => {
-    //      data = data.toString();
-    //      console.log('RECEIVED : ' + data);
-    //   //    io.sockets.emit('news', { data: data });
-    //    },1000)
-  };
-portSerial.on('data', sendDataToWebClient);
-portSerial.on('error', function(err) {
-    console.log('SearialPort Error: ', err.message);
-});
-//Send data from USB to web client
+// //const Readline = SerialPort.parsers.Readline;
+// //const parser = new Readline();
+// //port.pipe(parser);
+// const sendDataToWebClient = (data) => {
+//     console.log(data);
+//     // setTimeout(() => {
+//     //      data = data.toString();
+//     //      console.log('RECEIVED : ' + data);
+//     //   //    io.sockets.emit('news', { data: data });
+//     //    },1000)
+//   };
+// portSerial.on('data', sendDataToWebClient);
+// portSerial.on('error', function(err) {
+//     console.log('SearialPort Error: ', err.message);
+// });
+// //Send data from USB to web client
 
 
 const publicPath = path.join(__dirname, 'www');
