@@ -81,7 +81,7 @@ class SerialManager {
 
     sendMessage(message){
         return new Promise((resolve, reject) => {
-            port.write(`${SALT}:${message}`, err => {
+            this.port.write(`${SALT}:${message}`, err => {
                 if (err) reject('Error on write: ', err.message)
                 resolve('message sent');
             });
