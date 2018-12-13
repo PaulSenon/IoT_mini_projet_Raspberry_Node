@@ -33,7 +33,7 @@ const validateMessage = (message) => {
         newData.push({ [parts[0]]: parts[1] });
     });
 
-    let result = {}
+    let result = {data:{}};
     newData.forEach(value => {
         switch (Object.keys(value)[0]) {
             case 'T':
