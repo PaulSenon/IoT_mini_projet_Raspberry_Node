@@ -82,26 +82,26 @@ serialPort.on('readable', function () {
     console.log('Data:', serialPort.read());
 });
 
-// const SerialPort = require('serialport');
-// const Readline = require('@serialport/parser-readline');
-// const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
-// const parser = portS.pipe(new Readline({ 
-//     delimiter: '\n',
-//     encoding: 'ascii'
-// }));
-// parser.on('data', (data)=> {
-//     console.log(data);
-//     res = validateMessage(data);
-//     console.log(res);
-//     // if(res){
-//     //     dbManager.addSensorData(res['id'],res['data']);
-//     // }
-// });
-// // The open event is always emitted
-// portS.on('open', function() {
-//   // open logic
-//   console.log('open');
-// })
+const SerialPort = require('serialport');
+const Readline = require('@serialport/parser-readline');
+const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
+const parser = portS.pipe(new Readline({ 
+    delimiter: '\n\r',
+    encoding: 'ascii'
+}));
+parser.on('data', (data)=> {
+    console.log(data);
+    res = validateMessage(data);
+    console.log(res);
+    // if(res){
+    //     dbManager.addSensorData(res['id'],res['data']);
+    // }
+});
+// The open event is always emitted
+portS.on('open', function() {
+  // open logic
+  console.log('open');
+})
 
 
 
