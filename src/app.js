@@ -70,7 +70,7 @@ const SALT = 1567464;
 
 const SerialPort = require('serialport');
 const serialPort = new SerialPort('/dev/ttyUSB0', {
-    baudrate: 115200
+    bauDrate: 115200
 });
 
 // Switches the port into "flowing mode"
