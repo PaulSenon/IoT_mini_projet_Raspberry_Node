@@ -89,13 +89,13 @@ const parser = portS.pipe(new Readline({
     delimiter: '\n\r',
     encoding: 'ascii'
 }));
-parser.on('data', (data)=> {
+parser.on('data', async (data)=> {
     console.log(data);
     res = validateMessage(data);
     console.log(res);
-    // if(res){
-    //     dbManager.addSensorData(res['id'],res['data']);
-    // }
+    if(res){
+        await dbManager.addSensorData(res['id'],res['data']);
+    }
 });
 // The open event is always emitted
 portS.on('open', function() {
