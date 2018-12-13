@@ -17,13 +17,26 @@ const SerialPort = require('serialport');
 
 const SALT = 1567464;
 
+const portS = new SerialPort('/dev/ttyUSB0', {
+    baudRate: 115200
+});
+portS.on('readable', () => {
+    const message = portS.read();
+    console.log('RECEIVED: '+message);
+
+    // const res = this.validateMessage(message);
+    // if(!res) return;
+    
+    // await this.dbManager.addSensorData(res['id'], res['data']);
+});
+portS.on('error', function(err) {
+    console.log('Error serial: ', err.message);
+})
+
 class SerialManager {
     constructor(dbManager){
         this.dbManager = dbManager;
         // config serial port
-        this.port = new SerialPort('/dev/ttyUSB0', {
-            baudRate: 115200
-        });
 
         
         // ROBOT ONLINE
@@ -31,15 +44,6 @@ class SerialManager {
 
         
         // Read data that is available but keep the stream in "paused mode"
-        this.port.on('readable', () => {
-            const message = this.port.read();
-            console.log('RECEIVED: '+message);
-
-            // const res = this.validateMessage(message);
-            // if(!res) return;
-            
-            // await this.dbManager.addSensorData(res['id'], res['data']);
-        });
 
         // this.port.on('data', (data) => {
         //     console.log('Data:', data);
@@ -99,9 +103,9 @@ class SerialManager {
         };
 
         // // Error handler
-        this.port.on('error', function(err) {
-            console.log('Error serial: ', err.message);
-        })
+        // this.port.on('error', function(err) {
+        //     console.log('Error serial: ', err.message);
+        // })
     }
 
     sendMessage(message){
