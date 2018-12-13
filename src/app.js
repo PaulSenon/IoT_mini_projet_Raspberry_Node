@@ -16,14 +16,14 @@ const dbManager = new DbManager();
 //Setup Serial Port Connection
 const SerialPort = require('serialport');
 //const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort('/dev/ttyUSB0',{
+const portSerial = new SerialPort('/dev/ttyUSB0',{
   baudRate: 9600,	
   // parser: new SerialPort.parsers.Readline('\r\n')
 });
 //const parser = new Readline();
 //port.pipe(parser);
-port.on('data', sendDataToWebClient);
-port.on('error', function(err) {
+portSerial.on('data', sendDataToWebClient);
+portSerial.on('error', function(err) {
     console.log('SearialPort Error: ', err.message);
 });
 //Send data from USB to web client
