@@ -31,7 +31,7 @@ class SerialManager {
 
         
         // Read data that is available but keep the stream in "paused mode"
-        this.port.on('readable', async () => {
+        this.port.on('readable', () => {
             const message = this.port.read();
             console.log('RECEIVED: '+message);
 
