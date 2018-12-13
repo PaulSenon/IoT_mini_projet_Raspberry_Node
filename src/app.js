@@ -14,9 +14,56 @@ const dbManager = new DbManager();
 // const udpManager = new UdpManager(serialManager);
 
 
+onst validateMessage = (message) => {
+    const fragments = message.split(':'); 
+    if(fragments.length !== 3
+        || fragments[0] != SALT) return false;
+
+    const sensorId = fragments[1];
+    const data = fragments[2].split(',');
+    if(data.length <= 0) {
+        return false;
+    }
+
+    let newData = [];
+    data.forEach(value => {
+        const parts = value.split('=');
+        if(parts.length !== 2) return false;
+        newData.push({ [parts[0]]: parts[1] });
+    });
+
+    let result = {}
+    newData.forEach(value => {
+        switch (Object.keys(value)[0]) {
+            case 'T':
+                result['data']['temperature'] = value['T'];
+                break;
+            case 'H':
+                result['data']['humidity'] = value['H'];
+                break;
+            case 'P':
+                result['data']['pressure'] = value['P'];
+                break;
+            case 'L':
+                result['data']['luminosity'] = value['L'];
+                break;
+            case 'I':
+                result['data']['ir'] = value['I'];
+                break;
+            case 'U':
+                result['data']['uv'] = value['U'];
+                break;
+            default:
+                break;
+        }
+    });
+    result['id'] = sensorId;
+
+    return result;
+};
 
 
-
+const SALT = 1567464;
 
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
@@ -25,7 +72,13 @@ const parser = portS.pipe(new Readline({
     delimiter: '\n',
     encoding: 'ascii'
 }));
-parser.on('data', console.log);
+parser.on('data', (data)=> {
+    res = validateMessage(data);
+    console.log(res);
+    if(res){
+        dbManager.addSensorData(res['id'],res['data'])
+    }
+});
 // The open event is always emitted
 portS.on('open', function() {
   // open logic
@@ -34,6 +87,7 @@ portS.on('open', function() {
 
 
 
+c
 
 
 
