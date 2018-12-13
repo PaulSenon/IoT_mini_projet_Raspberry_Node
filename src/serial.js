@@ -1,49 +1,22 @@
 const SerialPort = require('serialport');
-// SerialPort.parsers = {
-//     Readline: require('@serialport/parser-readline'),
-// };
-// const Readline = SerialPort.parsers.Readline;
-// const port = new SerialPort('/dev/ttyUSB0',{baudRate:115200});
-// const parser = new Readline();
-// port.pipe(parser);
-// parser.on('data', (data)=> {
-//     console.log('parser triggered');
-//     console.log(data);
-// });
-// port.write('ROBOT PLEASE RESPOND\n');
-
-// // Creating the parser and piping can be shortened to
-// const parser = port.pipe(new Readline())
-
-const SALT = 1567464;
-
-const portS = new SerialPort('/dev/ttyUSB0', {
-    baudRate: 115200
-});
-portS.on('readable', () => {
-    const message = portS.read();
-    console.log('RECEIVED: '+message);
-
-    // const res = this.validateMessage(message);
-    // if(!res) return;
+const Readline = require('@serialport/parser-readline');
+const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
+const parser = portS.pipe(new Readline({ 
+    delimiter: '\n',
+    encoding: 'ascii'
+}));
+parser.on('data', (data)=> {
     
-    // await this.dbManager.addSensorData(res['id'], res['data']);
 });
-portS.on('error', function(err) {
-    console.log('Error serial: ', err.message);
+// The open event is always emitted
+portS.on('open', function() {
+  // open logic
+  console.log('open');
 })
 
+const SALT = 1567464;
 class SerialManager {
     constructor(dbManager){
-        console.log('serial OK');
-        this.dbManager = dbManager;
-        // config serial port
-
-        
-        // ROBOT ONLINE
-
-
-        
         // Read data that is available but keep the stream in "paused mode"
 
         // this.port.on('data', (data) => {
