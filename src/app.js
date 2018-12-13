@@ -18,10 +18,11 @@ const SerialPort = require('serialport');
 SerialPort.list().then(console.log);
 
 const portSerial = new SerialPort('/dev/ttyUSB0',{
-  baudRate: 18200,	
+  baudRate: 115200,	
   // parser: new SerialPort.parsers.Readline('\r\n')
 });
 setImmediate(() => {
+    console.log('message sent');
     portSerial.write("LOL des barres", "ascii", ()=>{console.log});
 }, 2000);
 
@@ -29,12 +30,12 @@ setImmediate(() => {
 //const parser = new Readline();
 //port.pipe(parser);
 const sendDataToWebClient = (data) => {
-    setTimeout(() => {
-         data = data.toString();
-         console.log('RECEIVED : ' + data);
-      //    io.sockets.emit('news', { data: data });
-       },1000
-    )
+    console.log(data);
+    // setTimeout(() => {
+    //      data = data.toString();
+    //      console.log('RECEIVED : ' + data);
+    //   //    io.sockets.emit('news', { data: data });
+    //    },1000)
   };
 portSerial.on('data', sendDataToWebClient);
 portSerial.on('error', function(err) {
