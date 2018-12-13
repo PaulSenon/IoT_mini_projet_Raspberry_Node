@@ -8,10 +8,33 @@ const _ = require('lodash');
 
 const DbManager = require('./lowdb');
 const dbManager = new DbManager();
-const SerialManager = require('./serial');
-const serialManager = new SerialManager(dbManager);
-const UdpManager = require('./udp');
-const udpManager = new UdpManager(serialManager);
+// const SerialManager = require('./serial');
+// const serialManager = new SerialManager(dbManager);
+// const UdpManager = require('./udp');
+// const udpManager = new UdpManager(serialManager);
+
+//Setup Serial Port Connection
+const SerialPort = require('serialport');
+//const Readline = SerialPort.parsers.Readline;
+const port = new SerialPort('/dev/ttyUSB0',{
+  baudRate: 9600,	
+  // parser: new SerialPort.parsers.Readline('\r\n')
+});
+//const parser = new Readline();
+//port.pipe(parser);
+port.on('data', sendDataToWebClient);
+port.on('error', function(err) {
+    console.log('SearialPort Error: ', err.message);
+});
+//Send data from USB to web client
+function sendDataToWebClient(data){
+  setTimeout(function(){
+       data = data.toString();
+       console.log('RECEIVED : ' + data);
+    //    io.sockets.emit('news', { data: data });
+     },1000
+  )
+};
 
 const publicPath = path.join(__dirname, 'www');
 const port = process.env.PORT || 80;
