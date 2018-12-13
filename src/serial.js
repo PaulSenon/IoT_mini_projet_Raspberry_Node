@@ -3,7 +3,7 @@ SerialPort.parsers = {
     Readline: require('@serialport/parser-readline'),
 };
 const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort('/dev/ttyUSB0');
+const port = new SerialPort('/dev/ttyUSB0',{baudRate:115200});
 const parser = new Readline();
 port.pipe(parser);
 parser.on('data', console.log);
