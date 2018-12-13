@@ -1,12 +1,12 @@
 const SerialPort = require('serialport');
-const SALT = 6578987867;
+const SALT = 1567464;
 
 class SerialManager {
     constructor(dbManager){
         this.dbManager = dbManager;
         // config serial port
-        this.port = new SerialPort('/dev/tty', {
-            baudRate: 57600
+        this.port = new SerialPort('/dev/ttyUSB0', {
+            baudRate: 9600
         });
         
         // Read data that is available but keep the stream in "paused mode"
@@ -18,7 +18,7 @@ class SerialManager {
             
             await this.dbManager.addSensorData(res['id'], res['data']);
         });
-
+      
         this.validateMessage = (message) => {
             const fragments = message.split(':'); 
             if(fragments.length !== 3
@@ -45,6 +45,9 @@ class SerialManager {
                         break;
                     case 'H':
                         result['data']['humidity'] = value['H'];
+                        break;
+                    case 'P':
+                        result['data']['pressure'] = value['P'];
                         break;
                     case 'L':
                         result['data']['luminosity'] = value['L'];
