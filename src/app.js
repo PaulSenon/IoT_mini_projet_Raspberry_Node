@@ -21,7 +21,7 @@ const dbManager = new DbManager();
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
-const lineStream = portS.pipe(new Readline());
+const lineStream = portS.pipe(new Readline({ delimiter: '\r\n' }));
 lineStream.on('line', (input) => {
     console.log(`Received: ${input}`);
 });
