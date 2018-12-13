@@ -19,7 +19,7 @@ const dbManager = new DbManager();
 
 
 const SerialPort = require('serialport')
-const portS = new SerialPort('/dev/tty-usbserial1', { baudRate: 115200 })
+const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 })
 
 portS.open(function (err) {
   if (err) {
