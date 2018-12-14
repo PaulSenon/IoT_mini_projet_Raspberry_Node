@@ -252,8 +252,7 @@ app.post('/test', (req, res) => {
     res.send(result);
 });
 
-app.post('/post/sensor-config/:id', async (req, res) => {
-    const id = req.params.id || 0;
+app.post('/post/sensor-config', async (req, res) => {
     const data = _.pick(req.body, [
         'T', 
         'H',
