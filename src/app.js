@@ -255,15 +255,13 @@ app.post('/test', (req, res) => {
 
 app.post('/post/sensor-config', async (req, res) => {
     const data = _.pick(req.body, ['0','1','2']);
-    serialMessage = '';
     Object.keys(data).forEach((pos, value) => {
         console.log(`${pos} => ${value}`);
         if(! ['T','H','L'].indexOf(value)){
             res.status(403).send();
         }
-        serialMessage += key;
     });
-    serialMessage += '\n';
+    serialMessage = data['0']+data['1']+data['2']+'\n';
     if(serialMessage.length !== 3){
         res.status(403).send();
     }
