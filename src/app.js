@@ -254,19 +254,16 @@ app.post('/test', (req, res) => {
 });
 
 app.post('/post/sensor-config', async (req, res) => {
-    const data = _.pick(req.body, [
-        'T', 
-        'H',
-        'L'
-    ]);
+    const data = _.pick(req.body, ['0','1','2']);
     serialMessage = '';
-    Object.keys(data).forEach((data, key) => {
-        console.log(`${data} => ${key}`);
-        if(data > 2 || data < 0){
+    Object.keys(data).forEach((pos, value) => {
+        console.log(`${pos} => ${value}`);
+        if(! (['T','H','L']).contains(value)){
             res.status(403).send();
         }
         serialMessage += key;
     });
+    serialMessage += '\n';
     if(serialMessage.length !== 3){
         res.status(403).send();
     }
