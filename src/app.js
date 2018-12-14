@@ -86,7 +86,7 @@ const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
 const parser = portS.pipe(new Readline({ 
-    delimiter: '\n\r',
+    delimiter: ' ',
     encoding: 'ascii'
 }));
 parser.on('data', async (data)=> {
@@ -100,7 +100,7 @@ parser.on('data', async (data)=> {
 // The open event is always emitted
 portS.on('open', function() {
   // open logic
-  console.log('open');
+  console.log('Serial initialized');
 })
 
 
