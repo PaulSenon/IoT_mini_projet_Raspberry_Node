@@ -106,7 +106,7 @@ portS.on('open', function() {
 
 const sendMessageSerial = (message) => {
     return new Promise((resolve, reject) => {
-        portS.write(message, err => {
+        portS.write(SALT+":".message, err => {
             if (err) reject('Error on write: ', err.message)
             resolve('message sent');
         });
