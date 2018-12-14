@@ -86,7 +86,7 @@ const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
 const parser = portS.pipe(new Readline({ 
-    delimiter: '\n',
+    delimiter: '\r\n',
     encoding: 'ascii'
 }));
 parser.on('data', async (data)=> {
@@ -102,6 +102,15 @@ portS.on('open', function() {
   // open logic
   console.log('Serial initialized');
 })
+
+const sendMessageSerial = (message) => {
+    return new Promise((resolve, reject) => {
+        this.port.write(`${SALT}:${message}`, err => {
+            if (err) reject('Error on write: ', err.message)
+            resolve('message sent');
+        });
+    });
+}
 
 
 
@@ -245,7 +254,17 @@ app.post('/test', (req, res) => {
 
 app.post('/set/sensor-config/:id', (req, res) => {
     const id = req.params.id || 0;
-    console.log(req.body);
+    const data = _.pick(req.body, [
+        'T', 
+        'H',
+        'L'
+    ]);
+    Object.keys(data).forEach((data) => {
+        if(data > 2 || data < 0){
+            res.status(403).send();
+        }
+    });
+    //TODO
     // var body = _.pick(req.body, ['temp', '1234']);
 });
 
