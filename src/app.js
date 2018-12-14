@@ -86,7 +86,7 @@ const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 const portS = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
 const parser = portS.pipe(new Readline({ 
-    delimiter: '\n',
+    delimiter: ':',
     encoding: 'ascii'
 }));
 parser.on('data', async (data)=> {
