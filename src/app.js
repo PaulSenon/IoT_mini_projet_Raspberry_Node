@@ -269,6 +269,7 @@ app.post('/post/sensor-config', async (req, res) => {
         res.status(403).send();
     }
     await sendMessageSerial(serialMessage);
+    res.status(200).send();
 });
 
 app.post('/set/sensor-data/:id', (req, res) => {
