@@ -15,8 +15,8 @@ class DatabaseManager {
 
     addSensorData(sensorId, data){
         return new Promise ((resolve, reject) => {
-            console.log(sensorId);
-            console.log(JSON.stringify(data, null, 2));
+            // console.log(sensorId);
+            // console.log(JSON.stringify(data, null, 2));
             try{
                 const timestamp = Date.now();
                 // // save to list

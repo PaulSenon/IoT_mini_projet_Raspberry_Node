@@ -91,6 +91,7 @@ const parser = portS.pipe(new Readline({
 }));
 parser.on('data', async (data)=> {
     console.log(data);
+    console.log("   CONVERTED TO =>");
     res = validateMessage(data);
     console.log(res);
     if(res){
@@ -260,6 +261,7 @@ app.post('/post/sensor-config', async (req, res) => {
     ]);
     serialMessage = '';
     Object.keys(data).forEach((data, key) => {
+        console.log(`${data} => ${key}`);
         if(data > 2 || data < 0){
             res.status(403).send();
         }
