@@ -106,7 +106,7 @@ portS.on('open', function() {
 
 const sendMessageSerial = (message) => {
     return new Promise((resolve, reject) => {
-        portS.write(SALT+":".message, err => {
+        portS.write(message, err => {
             if (err) reject('Error on write: ', err.message)
             resolve('message sent');
         });
@@ -265,7 +265,7 @@ app.post('/post/sensor-config', async (req, res) => {
     if(serialMessage.length !== 3){
         res.status(403).send();
     }
-    await sendMessageSerial(serialMessage);
+    await sendMessageSerial(SALT+":"+serialMessage);
     res.status(200).send();
 });
 
