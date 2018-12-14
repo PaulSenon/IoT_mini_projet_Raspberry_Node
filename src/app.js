@@ -258,7 +258,7 @@ app.post('/post/sensor-config', async (req, res) => {
     serialMessage = '';
     Object.keys(data).forEach((pos, value) => {
         console.log(`${pos} => ${value}`);
-        if(! (['T','H','L']).contains(value)){
+        if(! ['T','H','L'].indexOf(value)){
             res.status(403).send();
         }
         serialMessage += key;
