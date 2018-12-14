@@ -105,7 +105,7 @@ portS.on('open', function() {
 
 const sendMessageSerial = (message) => {
     return new Promise((resolve, reject) => {
-        this.port.write(`${SALT}:${message}`, err => {
+        this.port.write(message, err => {
             if (err) reject('Error on write: ', err.message)
             resolve('message sent');
         });
@@ -252,20 +252,24 @@ app.post('/test', (req, res) => {
     res.send(result);
 });
 
-app.post('/set/sensor-config/:id', (req, res) => {
+app.post('/post/sensor-config/:id', async (req, res) => {
     const id = req.params.id || 0;
     const data = _.pick(req.body, [
         'T', 
         'H',
         'L'
     ]);
-    Object.keys(data).forEach((data) => {
+    serialMessage = '';
+    Object.keys(data).forEach((data, key) => {
         if(data > 2 || data < 0){
             res.status(403).send();
         }
+        serialMessage += key;
     });
-    //TODO
-    // var body = _.pick(req.body, ['temp', '1234']);
+    if(serialMessage.length !== 3){
+        res.status(403).send();
+    }
+    await sendMessageSerial(serialMessage);
 });
 
 app.post('/set/sensor-data/:id', (req, res) => {
