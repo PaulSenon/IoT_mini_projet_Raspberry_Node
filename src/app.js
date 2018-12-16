@@ -10,11 +10,43 @@ const DbManager = require('./lowdb');
 const dbManager = new DbManager();
 // const SerialManager = require('./serial');
 // const serialManager = new SerialManager(dbManager);
-const UdpManager = require('./udp');
-const udpManager = new UdpManager(
-    // serialManager,
-    dbManager
-);
+// const UdpManager = require('./udp');
+// const udpManager = new UdpManager(
+//     // serialManager,
+//     dbManager
+// );
+
+const dgram = require('dgram');
+const UDP_PORT = 3000;
+
+const serverUdp = dgram.createSocket('udp4');
+serverUdp.bind(UDP_PORT);
+
+serverUdp.on('listening', () => {
+    console.log('UDP Server started at ', UDP_PORT);
+});
+
+serverUdp.on('message', async (msg, remote) => {
+    var message = msg.toString(); // need to convert to string 
+    console.log(remote.address + ':' + remote.port +' - ' + message);
+    if(message === 'getValues()'){
+        const resObject = await dbManager.getSensorLastData(1); // TODO là c'est en dur
+        const json = JSON.stringify(resObject);
+        serverUdp.send(json, 0, json.length, remote.port, remote.address, function(err, bytes) {
+            if (err) throw err;
+            console.log('UDP message sent to ' + remote.port +':'+ remote.address);
+        });
+    }else if(message.match(/^[TLH]{3}$/)){
+        await sendMessageSerial(SALT+":"+message);
+    }
+    // await this.serialManager.sendMessage(message);
+});
+
+serverUdp.on('error', () => {
+    // handle error
+    console.error('Error in UDP');
+});
+
 
 
 const validateMessage = (message) => {

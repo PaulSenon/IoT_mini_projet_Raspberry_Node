@@ -23,6 +23,8 @@ class UDPManager{
                     if (err) throw err;
                     console.log('UDP message sent to ' + remote.port +':'+ remote.address);
                 });
+            }else{
+                // TODO send "TLH" on serial
             }
             // await this.serialManager.sendMessage(message);
         });
