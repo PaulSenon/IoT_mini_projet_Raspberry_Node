@@ -10,12 +10,18 @@ const DbManager = require('./lowdb');
 const dbManager = new DbManager();
 // const SerialManager = require('./serial');
 // const serialManager = new SerialManager(dbManager);
-const UdpManager = require('./udp');
-const udpManager = new UdpManager(
-    // serialManager,
-    dbManager
-);
+// const UdpManager = require('./udp');
+// const udpManager = new UdpManager(
+//     // serialManager,
+//     dbManager
+// );
 
+const dgram = require('dgram');
+const UDP_PORT = 3000;
+
+const SALT = 1567464;
+
+const serverUdp = dgram.createSocket('udp4');
 
 const validateMessage = (message) => {
     const fragments = message.split(':'); 
@@ -66,7 +72,7 @@ const validateMessage = (message) => {
 };
 
 
-const SALT = 1567464;
+
 
 // const SerialPort = require('serialport');
 // const serialPort = new SerialPort('/dev/ttyUSB0', {
@@ -114,6 +120,39 @@ const sendMessageSerial = (message) => {
 }
 
 
+
+
+
+serverUdp.bind(UDP_PORT);
+
+serverUdp.on('listening', () => {
+    console.log('UDP Server started at ', UDP_PORT);
+});
+
+serverUdp.on('message', async (msg, remote) => {
+    var message = msg.toString(); // need to convert to string 
+    console.log(remote.address + ':' + remote.port +' - ' + message);
+    if(message === 'getValues()'){
+        const resObject = await dbManager.getSensorLastData(1); // TODO là c'est en dur
+        const json = JSON.stringify(resObject);
+        serverUdp.send(json, 0, json.length, remote.port, remote.address, function(err, bytes) {
+            if (err) throw err;
+            console.log('UDP message sent to ' + remote.port +':'+ remote.address);
+        });
+    }else{
+        const regex = RegExp(/^[TLH]{3}$/);
+        if(regex.test(message)){
+            console.log('#### ');
+            await sendMessageSerial(SALT+":"+message+'\n');
+        }
+    }
+    // await this.serialManager.sendMessage(message);
+});
+
+serverUdp.on('error', () => {
+    // handle error
+    console.error('Error in UDP');
+});
 
 
 const publicPath = path.join(__dirname, 'www');
@@ -262,7 +301,7 @@ app.post('/post/sensor-config', async (req, res) => {
         }
     });
     serialMessage = data['0']+data['1']+data['2']+'\n';
-    if(serialMessage.length !== 3){
+    if(serialMessage.length !== 4){
         res.status(403).send();
     }
     await sendMessageSerial(SALT+":"+serialMessage);
