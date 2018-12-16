@@ -19,6 +19,8 @@ const dbManager = new DbManager();
 const dgram = require('dgram');
 const UDP_PORT = 3000;
 
+const SALT = 1567464;
+
 const serverUdp = dgram.createSocket('udp4');
 serverUdp.bind(UDP_PORT);
 
@@ -102,7 +104,7 @@ const validateMessage = (message) => {
 };
 
 
-const SALT = 1567464;
+
 
 // const SerialPort = require('serialport');
 // const serialPort = new SerialPort('/dev/ttyUSB0', {
