@@ -37,8 +37,9 @@ serverUdp.on('message', async (msg, remote) => {
             console.log('UDP message sent to ' + remote.port +':'+ remote.address);
         });
     }else{
+        const regex = RegExp(/^[TLH]{3}$/);
         console.log("#### ", message);
-        console.log("#### ", message.test(/^[TLH]{3}$/));
+        console.log("#### ", regex.test(message));
         //await sendMessageSerial(SALT+":"+message);
     }
     // await this.serialManager.sendMessage(message);
