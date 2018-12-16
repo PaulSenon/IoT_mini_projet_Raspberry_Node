@@ -36,8 +36,10 @@ serverUdp.on('message', async (msg, remote) => {
             if (err) throw err;
             console.log('UDP message sent to ' + remote.port +':'+ remote.address);
         });
-    }else if(message.match(/^[TLH]{3}/)){
-        await sendMessageSerial(SALT+":"+message);
+    }else{
+        console.log("#### ", message);
+        console.log("#### ", message.match(/^[TLH]{3}$/));
+        //await sendMessageSerial(SALT+":"+message);
     }
     // await this.serialManager.sendMessage(message);
 });
