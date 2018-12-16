@@ -39,6 +39,7 @@ serverUdp.on('message', async (msg, remote) => {
     }else{
         const regex = RegExp(/^[TLH]{3}$/);
         if(regex.test(message)){
+            console.log('#### ');
             await sendMessageSerial(SALT+":"+message);
         }
     }
