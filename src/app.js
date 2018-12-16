@@ -38,7 +38,7 @@ serverUdp.on('message', async (msg, remote) => {
         });
     }else{
         console.log("#### ", message);
-        console.log("#### ", message.match(/^[TLH]{3}$/));
+        console.log("#### ", message.test(/^[TLH]{3}$/));
         //await sendMessageSerial(SALT+":"+message);
     }
     // await this.serialManager.sendMessage(message);
