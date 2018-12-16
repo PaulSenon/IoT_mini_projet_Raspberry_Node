@@ -301,7 +301,7 @@ app.post('/post/sensor-config', async (req, res) => {
         }
     });
     serialMessage = data['0']+data['1']+data['2']+'\n';
-    if(serialMessage.length !== 3){
+    if(serialMessage.length !== 4){
         res.status(403).send();
     }
     await sendMessageSerial(SALT+":"+serialMessage);
