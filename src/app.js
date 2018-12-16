@@ -22,38 +22,6 @@ const UDP_PORT = 3000;
 const SALT = 1567464;
 
 const serverUdp = dgram.createSocket('udp4');
-serverUdp.bind(UDP_PORT);
-
-serverUdp.on('listening', () => {
-    console.log('UDP Server started at ', UDP_PORT);
-});
-
-serverUdp.on('message', async (msg, remote) => {
-    var message = msg.toString(); // need to convert to string 
-    console.log(remote.address + ':' + remote.port +' - ' + message);
-    if(message === 'getValues()'){
-        const resObject = await dbManager.getSensorLastData(1); // TODO là c'est en dur
-        const json = JSON.stringify(resObject);
-        serverUdp.send(json, 0, json.length, remote.port, remote.address, function(err, bytes) {
-            if (err) throw err;
-            console.log('UDP message sent to ' + remote.port +':'+ remote.address);
-        });
-    }else{
-        const regex = RegExp(/^[TLH]{3}$/);
-        if(regex.test(message)){
-            console.log('#### ');
-            await sendMessageSerial(SALT+":"+message);
-        }
-    }
-    // await this.serialManager.sendMessage(message);
-});
-
-serverUdp.on('error', () => {
-    // handle error
-    console.error('Error in UDP');
-});
-
-
 
 const validateMessage = (message) => {
     const fragments = message.split(':'); 
@@ -152,6 +120,39 @@ const sendMessageSerial = (message) => {
 }
 
 
+
+
+
+serverUdp.bind(UDP_PORT);
+
+serverUdp.on('listening', () => {
+    console.log('UDP Server started at ', UDP_PORT);
+});
+
+serverUdp.on('message', async (msg, remote) => {
+    var message = msg.toString(); // need to convert to string 
+    console.log(remote.address + ':' + remote.port +' - ' + message);
+    if(message === 'getValues()'){
+        const resObject = await dbManager.getSensorLastData(1); // TODO là c'est en dur
+        const json = JSON.stringify(resObject);
+        serverUdp.send(json, 0, json.length, remote.port, remote.address, function(err, bytes) {
+            if (err) throw err;
+            console.log('UDP message sent to ' + remote.port +':'+ remote.address);
+        });
+    }else{
+        const regex = RegExp(/^[TLH]{3}$/);
+        if(regex.test(message)){
+            console.log('#### ');
+            await sendMessageSerial(SALT+":"+message);
+        }
+    }
+    // await this.serialManager.sendMessage(message);
+});
+
+serverUdp.on('error', () => {
+    // handle error
+    console.error('Error in UDP');
+});
 
 
 const publicPath = path.join(__dirname, 'www');
