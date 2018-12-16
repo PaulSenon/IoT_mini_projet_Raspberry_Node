@@ -38,9 +38,9 @@ serverUdp.on('message', async (msg, remote) => {
         });
     }else{
         const regex = RegExp(/^[TLH]{3}$/);
-        console.log("#### ", message);
-        console.log("#### ", regex.test(message));
-        //await sendMessageSerial(SALT+":"+message);
+        if(regex.test(message)){
+            await sendMessageSerial(SALT+":"+message);
+        }
     }
     // await this.serialManager.sendMessage(message);
 });
